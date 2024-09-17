@@ -1,0 +1,6 @@
+alertmanager/alertmanager-data
+es/es*
+es/kibanadata
+pgdata
+prometheus_data
+t

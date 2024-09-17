@@ -1,0 +1,24 @@
+global:
+  # Sendgrid SMTP properties.
+  smtp_smarthost: "smtp.sendgrid.net:587"
+  smtp_from: "yuh2k1@gmail.com"
+  smtp_auth_username: "apikey"
+  smtp_auth_password:
+receivers:
+  - name: mail
+    email_configs:
+      - to: "huy6a1@gmail.com"
+        headers:
+          Subject: "Alert ({{ .Status }}): {{ .CommonAnnotations.summary }} ({{ .CommonLabels.alertname }})"
+  - name: "stardata-telegram"
+    telegram_configs:
+      - bot_token:
+        api_url: https://api.telegram.org
+        chat_id: 
+        parse_mode: "HTML"
+        message: "{{ range .Alerts }}Alert: {{ .Annotations.summary }}\n{{ .Annotations.description }}\nSeverity: {{ .Labels.severity }}\n{{ end }}"
+route:
+  group_wait: 10s
+  group_interval: 1m
+  receiver: stardata-telegram
+  repeat_interval: 10s

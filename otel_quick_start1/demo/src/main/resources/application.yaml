@@ -1,0 +1,40 @@
+otel:
+  service:
+    name: "dice-server2"
+
+  metrics:
+    exporter: otlp
+  logs:
+    exporter: none
+  traces:
+    exporter: otlp
+  exporter:
+    otlp:
+      endpoint: ${OTLP_ENDPOINT:http://localhost:4318}
+  instrumentation:
+    micrometer:
+      enabled: true
+server:
+  port: 8080
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    export:
+      enabled: true
+    distribution:
+      percentiles-histogram:
+        all: true
+      slo:
+        http.server.requests: 10ms, 100ms
+  tracing:
+    sampling:
+      probability: 1.0
+  defaults:
+    metrics:
+      export:
+        enabled: true
+app:
+  service-url: ${SERVICE_URL:http://localhost:8080}

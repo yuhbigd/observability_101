@@ -1,0 +1,48 @@
+otel:
+  service:
+    name: "dice-server"
+  metrics:
+    exporter: otlp
+  logs:
+    exporter: none
+  traces:
+    exporter: otlp
+  exporter:
+    otlp:
+      endpoint: ${OTLP_ENDPOINT:http://localhost:4318}
+  instrumentation:
+    micrometer:
+      enabled: true
+
+spring:
+  datasource:
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/mydatabase}
+    username: ${SPRING_DATASOURCE_USERNAME:myuser}
+    password: ${SPRING_DATASOURCE_PASSWORD:mypassword}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: create-drop
+    show-sql: true
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  metrics:
+    export:
+      enabled: true
+    distribution:
+      percentiles-histogram:
+        all: true
+      slo:
+        http.server.requests: 10ms, 100ms
+  tracing:
+    sampling:
+      probability: 1.0
+  defaults:
+    metrics:
+      export:
+        enabled: true
