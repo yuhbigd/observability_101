@@ -1,4 +1,4 @@
-Learning how to configure a monitoring service. This diagram is based on model 3 of this article
+Learning how to configure a monitoring service. This diagram is based on model 3 of this article. (Many removed piece, need to reconfigure when I want to rerun it)
 </br>
 https://www.elastic.co/observability-labs/blog/3-models-logging-opentelemetry
 </br>
